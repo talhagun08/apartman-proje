@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartman Yönetimi</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#daireSakiniForm").submit(function (e) {
+                e.preventDefault();
+                var data = {
+                    telefon_no: $("#telefon_no").val(),
+                    ad: $("#ad").val(),
+                    soyad: $("#soyad").val(),
+                    daire_no: $("#daire_no").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/daire_sakini_ekle",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert("Daire sakini eklendi.");
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Hata: " + error);
+                    }
+                });
+            });
+
+            $("#gelirGiderForm").submit(function (e) {
+                e.preventDefault();
+                var data = {
+                    gelir_miktari: $("#gelir_miktari").val(),
+                    gider_miktari: $("#gider_miktari").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/gelir_gider_ekle",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert("Gelir/Gider eklendi.");
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Hata: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Apartman Yönetimi</h1>
+
+    <h2>Daire Sakini Ekle</h2>
+    <form id="daireSakiniForm">
+        <label for="telefon_no">Telefon Numarası:</label>
+        <input type="text" id="telefon_no" required><br>
+
+        <label for="ad">Ad:</label>
+        <input type="text" id="ad" required><br>
+
+        <label for="soyad">Soyad:</label>
+        <input type="text" id="soyad" required><br>
+
+        <label for="daire_no">Daire Numarası:</label>
+        <input type="text" id="daire_no" required><br>
+
+        <input type="submit" value="Ekle">
+    </form>
+
+    <h2>Gelir/Gider Ekle</h2>
+    <form id="gelirGiderForm">
+        <label for="gelir_miktari">Gelir Miktarı:</label>
+        <input type="text" id="gelir_miktari" required><br>
+
+        <label for="gider_miktari">Gider Miktarı:</label>
+        <input type="text" id="gider_miktari" required><br>
+
+        <input type="submit" value="Ekle">
+    </form>
+</body>
+</html>
